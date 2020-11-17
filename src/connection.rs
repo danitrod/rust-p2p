@@ -13,10 +13,10 @@ pub struct Connection {
 }
 
 impl Connection {
-    pub fn new(host: String, port: String) -> Connection {
+    pub fn new(host: Ipv4Addr, port: u16) -> Connection {
         Connection {
-            host: host.parse().expect("Invalid host provided."),
-            port: port.parse().expect("Invalid port provided."),
+            host,
+            port,
             status: ConnectionStatus::DEAD,
         }
     }

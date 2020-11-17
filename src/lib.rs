@@ -47,3 +47,27 @@ pub fn option_input(min: u8, max: u8) -> u8 {
         return inp;
     }
 }
+
+pub fn port_input() -> u16 {
+    eprint!(">>");
+    loop {
+        let mut inp = String::new();
+        io::stdin()
+            .read_line(&mut inp)
+            .expect("Failed to read line");
+        let inp: u16 = match inp.trim().parse() {
+            Ok(num) => {
+                if num < 10 {
+                    eprint!("Please enter a valid port\n>>");
+                    continue;
+                }
+                num
+            }
+            Err(_) => {
+                eprint!("Please enter a valid port\n>>");
+                continue;
+            }
+        };
+        return inp;
+    }
+}
