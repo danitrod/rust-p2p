@@ -19,6 +19,7 @@ fn main() {
         match option_input(1, 3) {
             1 => println!("seed"),
             2 => {
+                println!("Enter an IP\n");
                 let ip = ip_input();
                 println!("Leeching from {}", ip)
             }

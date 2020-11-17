@@ -7,7 +7,7 @@ pub use connection::Connection;
 pub use connection::ConnectionStatus;
 
 pub fn ip_input() -> Ipv4Addr {
-    eprint!("Enter an IP\n>>");
+    eprint!(">>");
     loop {
         let mut inp = String::new();
         io::stdin()
