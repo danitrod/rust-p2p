@@ -31,13 +31,7 @@ fn main() {
                 .expect("Failed to create Tokio runtime")
                 .block_on(seed(host, port)),
             // Leech file
-            2 => {
-                println!("Enter an IP");
-                let ip = ip_input();
-                println!("Enter a port");
-                let port = port_input();
-                leech(ip, port);
-            }
+            2 => leech(),
             // Get IP list for file
             3 => Runtime::new()
                 .expect("Failed to create Tokio runtime")
@@ -69,7 +63,11 @@ async fn seed(ip: Ipv4Addr, port: u16) {
     println!("res: {}", res.text().await.unwrap());
 }
 
-fn leech(ip: Ipv4Addr, port: u16) {
+fn leech() {
+    println!("Enter an IP");
+    let ip = ip_input();
+    println!("Enter a port");
+    let port = port_input();
     println!("Leeching from {}:{}", ip, port);
 }
 
