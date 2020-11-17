@@ -1,4 +1,4 @@
-use std::net::{self, IpAddr, Ipv4Addr, Ipv6Addr};
+use std::net::Ipv4Addr;
 
 #[derive(Debug)]
 pub enum ConnectionStatus {
@@ -26,14 +26,14 @@ impl Connection {
 #[derive(Debug)]
 pub struct ConnManager {
     // Number of connections being mangaged
-    nAlive: u16,
+    n_alive: u16,
     connections: Vec<Connection>,
 }
 
 impl ConnManager {
     pub fn new() -> ConnManager {
         ConnManager {
-            nAlive: 0,
+            n_alive: 0,
             connections: Vec::with_capacity(4),
         }
     }
