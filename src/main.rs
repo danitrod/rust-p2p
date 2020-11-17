@@ -1,7 +1,7 @@
 use dotenv::dotenv;
 use futures::executor::block_on;
 use reqwest::{blocking, get};
-use rustp2p::{option_input, Connection, ConnectionStatus};
+use rustp2p::*;
 use std::collections::HashMap;
 use std::env;
 use std::io;
@@ -18,7 +18,10 @@ fn main() {
         eprint!("Select an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n");
         match option_input(1, 3) {
             1 => println!("seed"),
-            2 => println!("leech"),
+            2 => {
+                let ip = ip_input();
+                println!("Leeching from {}", ip)
+            }
             3 => println!("find"),
             _ => panic!("Unexpected option received."),
         }
