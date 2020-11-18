@@ -8,9 +8,6 @@ use std::io::{self, prelude::*};
 use std::net::{IpAddr::V4, Ipv4Addr, SocketAddr, TcpStream};
 use tokio::runtime::Runtime;
 
-// checks if another client has requested a file
-fn poll_requests() {}
-
 fn main() {
     // Get environment variables
     dotenv().ok();
@@ -44,7 +41,11 @@ fn main() {
 }
 
 async fn seed(ip: Ipv4Addr, port: u16) {
-    let file_name = String::from("teste.zip");
+    println!("Enter the file name\n>>");
+    let mut file_name = String::new();
+    io::stdin()
+        .read_line(&mut file_name)
+        .expect("Failed to read line");
     let base_url = env::var("SERVER_URL").expect("Server url not found.");
     let password = env::var("SENHA").expect("Senha not found.");
 
@@ -62,7 +63,7 @@ async fn seed(ip: Ipv4Addr, port: u16) {
         .await
         .unwrap();
 
-    println!("res: {}", res.text().await.unwrap());
+    println!("Server response: {}", res.text().await.unwrap());
 }
 
 fn leech() -> io::Result<()> {
@@ -70,7 +71,7 @@ fn leech() -> io::Result<()> {
     let ip = ip_input();
     println!("Enter a port");
     let port = port_input();
-    println!("Enter the file name");
+    println!("Enter the file name\n>>");
     let mut file_name = String::new();
     io::stdin()
         .read_line(&mut file_name)
@@ -81,14 +82,18 @@ fn leech() -> io::Result<()> {
 }
 
 async fn find() {
-    let file_name = "banana.txt";
+    println!("Enter the file name\n>>");
+    let mut file_name = String::new();
+    io::stdin()
+        .read_line(&mut file_name)
+        .expect("Failed to read line");
     let base_url = env::var("SERVER_URL").expect("Server url not found.");
     let password = env::var("SENHA").expect("Senha not found.");
     let client = Client::new();
 
     let res = client
         .get(format!("{}/leech?name={}", base_url, file_name).as_str())
-        .header("auth", password.clone())
+        .header("auth", password)
         .send()
         .await
         .unwrap();
@@ -116,8 +121,6 @@ fn leech_from_peer(ip: Ipv4Addr, port: u16, file_name: String) -> io::Result<()>
         println!("Message Received: {}", String::from_utf8_lossy(&buf[..]));
         file.write(&buf[..n]).expect("Error writing file");
     }
-
-    
 
     Ok(())
 }

@@ -1,11 +1,8 @@
 use std::io;
 use std::net::Ipv4Addr;
 
-mod connection;
 mod server;
 
-pub use connection::Connection;
-pub use connection::ConnectionStatus;
 pub use server::start_server;
 
 pub fn ip_input() -> Ipv4Addr {
