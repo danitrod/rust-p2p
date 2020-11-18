@@ -5,11 +5,6 @@ use std::net::{IpAddr::V4, Ipv4Addr, Shutdown, SocketAddr, TcpListener, TcpStrea
 
 // start peer server
 pub fn start_server(host: Ipv4Addr, port: u16) -> io::Result<()> {
-  println!(
-    "Running on {}/share/{}",
-    current_dir().unwrap().display(),
-    "maca.txt"
-  );
   println!("Starting server on port {}", port);
 
   let tcp_listener = TcpListener::bind(SocketAddr::new(V4(host), port))?;
