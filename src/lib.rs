@@ -2,12 +2,14 @@ use std::io;
 use std::net::Ipv4Addr;
 
 mod connection;
+mod server;
 
 pub use connection::Connection;
 pub use connection::ConnectionStatus;
+pub use server::start_server;
 
 pub fn ip_input() -> Ipv4Addr {
-    eprint!(">>");
+    print!(">>");
     loop {
         let mut inp = String::new();
         io::stdin()
@@ -25,7 +27,7 @@ pub fn ip_input() -> Ipv4Addr {
 }
 
 pub fn option_input(min: u8, max: u8) -> u8 {
-    eprint!(">>");
+    print!(">>");
     loop {
         let mut inp = String::new();
         io::stdin()
@@ -49,7 +51,7 @@ pub fn option_input(min: u8, max: u8) -> u8 {
 }
 
 pub fn port_input() -> u16 {
-    eprint!(">>");
+    print!(">>");
     loop {
         let mut inp = String::new();
         io::stdin()

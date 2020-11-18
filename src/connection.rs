@@ -5,6 +5,7 @@ pub enum ConnectionStatus {
     DEAD,
     ALIVE,
 }
+
 #[derive(Debug)]
 pub struct Connection {
     host: Ipv4Addr,
