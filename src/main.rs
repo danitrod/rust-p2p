@@ -102,6 +102,9 @@ fn leech_from_peer(ip: Ipv4Addr, port: u16, file_name: String) -> io::Result<()>
     connection.write(file_name.as_bytes())?;
     println!("Sent message to stream");
 
+    let path = format!("share/{}", file_name);
+    let mut file = File::create(path)?;
+
     let mut buf = [0; 4096];
     loop {
         let n = connection.read(&mut buf)?;
@@ -111,11 +114,10 @@ fn leech_from_peer(ip: Ipv4Addr, port: u16, file_name: String) -> io::Result<()>
             break;
         }
         println!("Message Received: {}", String::from_utf8_lossy(&buf[..]));
+        file.write(&buf[..n]).expect("Error writing file");
     }
 
-    let path = format!("share/{}", file_name);
-    let mut file = File::create(path)?;
-    file.write(&buf).expect("Error writing file");
+    
 
     Ok(())
 }
