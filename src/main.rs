@@ -19,9 +19,12 @@ fn main() {
         .expect("Port not provided")
         .parse()
         .expect("Invalid port provided.");
+    let url: String = env::var("SERVER_URL").expect("Server url not found");
+    let password: String = env::var("SENHA").expect("Senha not found");
 
     // Start seeding server
     std::thread::spawn(move || -> io::Result<()> { start_server(host, port) });
+
     // Create Tokio runtime
     let mut rt = Runtime::new().expect("Failed to create Tokio runtime");
 
@@ -30,24 +33,22 @@ fn main() {
         eprint!("Select an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n");
         match option_input(1, 3) {
             // Seed file
-            1 => rt.block_on(seed(host, port)),
+            1 => rt.block_on(seed(host, port, url.clone(), password.clone())),
             // Leech file
             2 => leech().unwrap(),
             // Get IP list for file
-            3 => rt.block_on(find()),
+            3 => rt.block_on(find(url.clone(), password.clone())),
             _ => panic!("Unexpected option received."),
         }
     }
 }
 
-async fn seed(ip: Ipv4Addr, port: u16) {
+async fn seed(ip: Ipv4Addr, port: u16, url: String, password: String) {
     println!("Enter the file name\n>>");
     let mut file_name = String::new();
     io::stdin()
         .read_line(&mut file_name)
         .expect("Failed to read line");
-    let base_url = env::var("SERVER_URL").expect("Server url not found.");
-    let password = env::var("SENHA").expect("Senha not found.");
 
     let mut body = HashMap::new();
     body.insert("name", file_name);
@@ -56,7 +57,7 @@ async fn seed(ip: Ipv4Addr, port: u16) {
     let client = Client::new();
 
     let res = client
-        .post(format!("{}/seed", base_url).as_str())
+        .post(format!("{}/seed", url).as_str())
         .header("auth", password)
         .json(&body)
         .send()
@@ -81,18 +82,16 @@ fn leech() -> io::Result<()> {
     Ok(())
 }
 
-async fn find() {
-    println!("Enter the file name\n>>");
+async fn find(url: String, password: String) {
+    print!("Enter the file name\n>>");
     let mut file_name = String::new();
     io::stdin()
         .read_line(&mut file_name)
         .expect("Failed to read line");
-    let base_url = env::var("SERVER_URL").expect("Server url not found.");
-    let password = env::var("SENHA").expect("Senha not found.");
     let client = Client::new();
 
     let res = client
-        .get(format!("{}/leech?name={}", base_url, file_name).as_str())
+        .get(format!("{}/leech?name={}", url, file_name).as_str())
         .header("auth", password)
         .send()
         .await
