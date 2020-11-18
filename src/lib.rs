@@ -6,7 +6,6 @@ mod server;
 pub use server::start_server;
 
 pub fn ip_input() -> Ipv4Addr {
-    print!(">>");
     loop {
         let mut inp = String::new();
         io::stdin()
@@ -24,7 +23,6 @@ pub fn ip_input() -> Ipv4Addr {
 }
 
 pub fn option_input(min: u8, max: u8) -> u8 {
-    print!(">>");
     loop {
         let mut inp = String::new();
         io::stdin()
@@ -48,7 +46,6 @@ pub fn option_input(min: u8, max: u8) -> u8 {
 }
 
 pub fn port_input() -> u16 {
-    print!(">>");
     loop {
         let mut inp = String::new();
         io::stdin()

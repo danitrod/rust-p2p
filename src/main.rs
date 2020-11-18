@@ -30,7 +30,7 @@ fn main() {
 
     // Main event loop
     loop {
-        eprint!("Select an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n");
+        eprint!("Select an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n>>");
         match option_input(1, 3) {
             // Seed file
             1 => rt.block_on(seed(host, port, url.clone(), password.clone())),
@@ -44,7 +44,7 @@ fn main() {
 }
 
 async fn seed(ip: Ipv4Addr, port: u16, url: String, password: String) {
-    println!("Enter the file name\n>>");
+    print!("Enter the file name\n>>");
     let mut file_name = String::new();
     io::stdin()
         .read_line(&mut file_name)
@@ -68,11 +68,11 @@ async fn seed(ip: Ipv4Addr, port: u16, url: String, password: String) {
 }
 
 fn leech() -> io::Result<()> {
-    println!("Enter an IP");
+    print!("Enter an IP\n>>");
     let ip = ip_input();
-    println!("Enter a port");
+    print!("Enter a port\n>>");
     let port = port_input();
-    println!("Enter the file name\n>>");
+    print!("Enter the file name\n>>");
     let mut file_name = String::new();
     io::stdin()
         .read_line(&mut file_name)
