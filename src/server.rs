@@ -1,5 +1,5 @@
 use std::env::current_dir;
-use std::fs::read_to_string;
+use std::fs::read;
 use std::io::{self, Read, Write};
 use std::net::{IpAddr::V4, Ipv4Addr, Shutdown, SocketAddr, TcpListener, TcpStream};
 
@@ -23,7 +23,7 @@ pub fn start_server(host: Ipv4Addr, port: u16) -> io::Result<()> {
 
     // Search for the file in the share folder
     let path = format!("{}/share/{}", current_dir().unwrap().display(), file_name);
-    let file = match read_to_string(path) {
+    let file = match read(path) {
       Ok(f) => (f),
       Err(err) => {
         println!("Error searching for file: {}", err);
@@ -33,7 +33,7 @@ pub fn start_server(host: Ipv4Addr, port: u16) -> io::Result<()> {
     };
 
     // Return file
-    tcp_stream.write(file.as_bytes())?;
+    tcp_stream.write(&file)?;
   }
 
   Ok(())
