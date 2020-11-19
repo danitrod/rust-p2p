@@ -14,7 +14,7 @@ pub fn ip_input() -> Ipv4Addr {
         let inp: Ipv4Addr = match inp.trim().parse() {
             Ok(ip) => ip,
             Err(_) => {
-                eprint!("Please enter a valid IPv4\n>>");
+                print!("Please enter a valid IPv4\n>>");
                 continue;
             }
         };
@@ -31,13 +31,13 @@ pub fn option_input(min: u8, max: u8) -> u8 {
         let inp: u8 = match inp.trim().parse() {
             Ok(num) => {
                 if num < min || num > max {
-                    eprint!("Please enter a valid option\n>>");
+                    print!("Please enter a valid option\n>>");
                     continue;
                 }
                 num
             }
             Err(_) => {
-                eprint!("Please enter a valid option\n>>");
+                print!("Please enter a valid option\n>>");
                 continue;
             }
         };
@@ -54,13 +54,13 @@ pub fn port_input() -> u16 {
         let inp: u16 = match inp.trim().parse() {
             Ok(num) => {
                 if num < 10 {
-                    eprint!("Please enter a valid port\n>>");
+                    print!("Please enter a valid port\n>>");
                     continue;
                 }
                 num
             }
             Err(_) => {
-                eprint!("Please enter a valid port\n>>");
+                print!("Please enter a valid port\n>>");
                 continue;
             }
         };

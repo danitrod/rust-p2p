@@ -30,7 +30,7 @@ fn main() {
 
     // Main event loop
     loop {
-        eprint!("Select an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n>>");
+        print!("Select an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n>>");
         match option_input(1, 3) {
             // Seed file
             1 => rt.block_on(seed(host, port, url.clone(), password.clone())),
