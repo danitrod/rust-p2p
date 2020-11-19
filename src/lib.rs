@@ -67,3 +67,18 @@ pub fn port_input() -> u16 {
         return inp;
     }
 }
+
+pub fn text_input() -> String {
+    let mut inp = String::new();
+    io::stdin()
+        .read_line(&mut inp)
+        .expect("Failed to read line");
+    if inp.ends_with('\n') {
+        // Remove trailing newline
+        inp.pop();
+        if inp.ends_with('\r') {
+            inp.pop();
+        }
+    }
+    inp
+}

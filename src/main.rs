@@ -45,10 +45,7 @@ fn main() {
 
 async fn seed(ip: Ipv4Addr, port: u16, url: String, password: String) {
     print!("Enter the file name\n>>");
-    let mut file_name = String::new();
-    io::stdin()
-        .read_line(&mut file_name)
-        .expect("Failed to read line");
+    let file_name = text_input();
 
     let mut body = HashMap::new();
     body.insert("name", file_name);
@@ -73,10 +70,7 @@ fn leech() -> io::Result<()> {
     print!("Enter a port\n>>");
     let port = port_input();
     print!("Enter the file name\n>>");
-    let mut file_name = String::new();
-    io::stdin()
-        .read_line(&mut file_name)
-        .expect("Failed to read line");
+    let file_name = text_input();
 
     leech_from_peer(ip, port, file_name)?;
     Ok(())
@@ -84,10 +78,7 @@ fn leech() -> io::Result<()> {
 
 async fn find(url: String, password: String) {
     print!("Enter the file name\n>>");
-    let mut file_name = String::new();
-    io::stdin()
-        .read_line(&mut file_name)
-        .expect("Failed to read line");
+    let file_name = text_input();
     let client = Client::new();
 
     let res = client

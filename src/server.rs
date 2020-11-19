@@ -14,7 +14,7 @@ pub fn start_server(host: Ipv4Addr, port: u16) -> io::Result<()> {
     // Read file name from stream
     let mut tcp_stream: TcpStream = stream.unwrap();
     let read_bytes = tcp_stream.read(&mut buf).unwrap();
-    let file_name = String::from_utf8_lossy(&buf[..read_bytes - 1]);
+    let file_name = String::from_utf8_lossy(&buf[..read_bytes]);
     println!(
       "Received connection from {} requesting {}",
       tcp_stream.peer_addr().unwrap(),
