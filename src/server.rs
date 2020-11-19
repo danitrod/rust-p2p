@@ -4,10 +4,10 @@ use std::io::{self, Read, Write};
 use std::net::{IpAddr::V4, Ipv4Addr, Shutdown, SocketAddr, TcpListener, TcpStream};
 
 // start peer server
-pub fn start_server(_host: Ipv4Addr, port: u16) -> io::Result<()> {
+pub fn start_server(host: Ipv4Addr, port: u16) -> io::Result<()> {
   println!("Starting server on port {}", port);
 
-  let tcp_listener = TcpListener::bind(format!("0.0.0.0:{}", port))?;
+  let tcp_listener = TcpListener::bind(SocketAddr::new(V4(host), port))?;
   let mut buf = [0; 4096];
   // Handle each connection
   for stream in tcp_listener.incoming() {

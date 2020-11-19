@@ -34,7 +34,7 @@ fn main() {
         print!(">>");
         match option_input(1, 3) {
             // Seed file
-            1 => rt.block_on(seed(host, port, url.clone(), password.clone())),
+            1 => rt.block_on(seed(url.clone(), password.clone())),
             // Leech file
             2 => leech().unwrap(),
             // Get IP list for file
@@ -44,9 +44,13 @@ fn main() {
     }
 }
 
-async fn seed(ip: Ipv4Addr, port: u16, url: String, password: String) {
+async fn seed(url: String, password: String) {
     print!("Enter the file name\n>>");
     let file_name = text_input();
+    print!("Enter your public IP\n>>");
+    let ip = ip_input();
+    print!("Enter your port\n>>");
+    let port = port_input();
 
     let mut body = HashMap::new();
     body.insert("name", file_name);
