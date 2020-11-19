@@ -1,3 +1,4 @@
+use crate::MAX_FILE_SIZE;
 use std::env::current_dir;
 use std::fs::read;
 use std::io::{self, Read, Write};
@@ -8,7 +9,7 @@ pub fn start_server(host: Ipv4Addr, port: u16) -> io::Result<()> {
   println!("Starting server on port {}", port);
 
   let tcp_listener = TcpListener::bind(SocketAddr::new(V4(host), port))?;
-  let mut buf = [0; 4096];
+  let mut buf = [0; MAX_FILE_SIZE];
   // Handle each connection
   for stream in tcp_listener.incoming() {
     // Read file name from stream

@@ -5,6 +5,8 @@ mod server;
 
 pub use server::start_server;
 
+pub const MAX_FILE_SIZE: usize = 65535;
+
 pub fn ip_input() -> Ipv4Addr {
     loop {
         let mut inp = String::new();

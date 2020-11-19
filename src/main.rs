@@ -105,7 +105,7 @@ fn leech_from_peer(ip: Ipv4Addr, port: u16, file_name: String) -> io::Result<()>
     let path = format!("share/{}", file_name);
     let mut file = File::create(path)?;
 
-    let mut buf = [0; 4096];
+    let mut buf = [0; MAX_FILE_SIZE];
     loop {
         let n = connection.read(&mut buf)?;
         if n == 0 {
