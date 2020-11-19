@@ -30,7 +30,8 @@ fn main() {
 
     // Main event loop
     loop {
-        eprint!("Select an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n>>");
+        print!("\nSelect an option\n1 - Seed a file\n2 - Leech a file from an IP\n3 - Find a seeder for file\n");
+        print!(">>");
         match option_input(1, 3) {
             // Seed file
             1 => rt.block_on(seed(host, port, url.clone(), password.clone())),
@@ -95,7 +96,7 @@ async fn find(url: String, password: String) {
 fn leech_from_peer(ip: Ipv4Addr, port: u16, file_name: String) -> io::Result<()> {
     let mut connection: TcpStream = TcpStream::connect(SocketAddr::new(V4(ip), port))?;
     connection.write(file_name.as_bytes())?;
-    println!("Sent message to stream");
+    println!("Sent request to peer");
 
     let path = format!("share/{}", file_name);
     let mut file = File::create(path)?;
@@ -103,12 +104,12 @@ fn leech_from_peer(ip: Ipv4Addr, port: u16, file_name: String) -> io::Result<()>
     let mut buf = [0; 4096];
     loop {
         let n = connection.read(&mut buf)?;
-        println!("n is {}", n);
         if n == 0 {
             // reached end of file
             break;
         }
-        println!("Message Received: {}", String::from_utf8_lossy(&buf[..]));
+        println!("File Received: {}", file_name);
+        println!("File size {}bytes", n);
         file.write(&buf[..n]).expect("Error writing file");
     }
 
