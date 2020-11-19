@@ -1,6 +1,6 @@
 # Rust P2P
 
-Pre-requirement: run https://github.com/danitrod/p2p-file-index-server/ and get the URL
+Pre-requirement: run https://github.com/danitrod/p2p-file-index-server/ and save the URL to use in the `.env` file.
 
 To run, create a `.env` file in the root, having the following values:
 
